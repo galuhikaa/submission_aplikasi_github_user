@@ -41,9 +41,7 @@ class MainActivity : AppCompatActivity() {
         getUser()
 
         val pref = SettingPreferences.getInstance(application.dataStore)
-        val mainViewModel = ViewModelProvider(this, ViewModelFactory(pref)).get(
-            ThemeViewModel::class.java
-        )
+        val mainViewModel = ViewModelProvider(this, ViewModelFactory(pref))[ThemeViewModel::class.java]
         mainViewModel.getThemeSettings().observe(this) { isDarkModeActive: Boolean ->
             if (isDarkModeActive) {
                 AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
@@ -56,7 +54,7 @@ class MainActivity : AppCompatActivity() {
             searchView.setupWithSearchBar(searchBar)
             searchView
                 .editText
-                .setOnEditorActionListener { textView, actionId, event ->
+                .setOnEditorActionListener { _, _, _ ->
                     searchBar.text = searchView.text
                     searchView.hide()
                     val query = searchView.text.toString()
@@ -86,7 +84,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    fun searching(query: String){
+    private fun searching(query: String){
         showLoading(true)
         ApiConfig.apiService.getSearch(query).enqueue(object : Callback<GitHubResponse>{
             override fun onResponse(
@@ -96,9 +94,7 @@ class MainActivity : AppCompatActivity() {
                 showLoading(false)
                 if (response.isSuccessful) {
                     val searchResults = response.body()?.items as ArrayList<ApiResponse>
-                    if (searchResults != null) {
-                        setDataAdapter(searchResults)
-                    }
+                    setDataAdapter(searchResults)
                 }
             }
             override fun onFailure(call: Call<GitHubResponse>, t: Throwable) {
@@ -108,7 +104,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    fun getUser(){
+    private fun getUser(){
         showLoading(true)
         ApiConfig.apiService.getGithub().enqueue(object : Callback<ArrayList<ApiResponse>>{
             override fun onResponse(

@@ -47,5 +47,3 @@ class GithubAdapter(val context: Context, val datalist: ArrayList<ApiResponse>):
         notifyDataSetChanged()
     }
 }
-
-

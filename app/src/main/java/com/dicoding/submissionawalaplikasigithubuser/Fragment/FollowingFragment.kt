@@ -14,16 +14,6 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [FollowingFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class FollowingFragment : Fragment() {
     private lateinit var fAdapter: GithubAdapter
     private lateinit var binding: FragmentFollowingBinding
@@ -31,7 +21,7 @@ class FollowingFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         binding = FragmentFollowingBinding.inflate(layoutInflater, container, false)
 
         showLoading(true)
@@ -46,7 +36,7 @@ class FollowingFragment : Fragment() {
         return binding.root
     }
 
-    fun getFollowing(data : String){
+    private fun getFollowing(data : String){
         ApiConfig.apiService.getFollowing(data).enqueue(object : Callback<ArrayList<ApiResponse>> {
             override fun onResponse(
                 call: Call<ArrayList<ApiResponse>>,
@@ -73,5 +63,4 @@ class FollowingFragment : Fragment() {
             binding.progresfollowing.visibility = View.GONE
         }
     }
-
 }

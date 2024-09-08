@@ -50,4 +50,3 @@ class BookmarkAdapter : RecyclerView.Adapter<BookmarkAdapter.UserViewHolder>(){
         }
     }
 }
-
